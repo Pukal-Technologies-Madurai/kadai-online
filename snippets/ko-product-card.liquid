@@ -1,0 +1,91 @@
+{%- liquid
+  assign has_compare = false
+  if product.compare_at_price_max > product.price
+    assign has_compare = true
+    assign pct_off = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max
+  endif
+  assign is_available = product.available
+  assign rating_val = product.metafields.reviews.rating.value | default: 4.3
+  assign rating_count = product.metafields.reviews.rating_count.value | default: ''
+-%}
+<div class="ko-product-card">
+
+  <button class="ko-product-card__wishlist" aria-label="Add {{ product.title | escape }} to wishlist" type="button">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+  </button>
+
+  <a href="{{ product.url }}" class="ko-product-card__img-wrap" tabindex="-1" aria-hidden="true">
+    {%- if has_compare -%}
+      <span class="ko-product-card__discount-badge">{{ pct_off }}% off</span>
+    {%- endif -%}
+    {%- if product.featured_image != blank -%}
+      {{
+        product.featured_image
+        | image_url: width: 400
+        | image_tag:
+          class: 'ko-product-card__img',
+          loading: 'lazy',
+          widths: '150, 220, 300, 400',
+          sizes: '(min-width: 1100px) 20vw, (min-width: 750px) 25vw, 45vw',
+          alt: product.featured_image.alt | escape
+      }}
+    {%- else -%}
+      <span class="ko-product-card__placeholder-icon" aria-hidden="true">🛍️</span>
+    {%- endif -%}
+  </a>
+
+  <div class="ko-product-card__body">
+
+    <div class="ko-stars" aria-label="Rated {{ rating_val }} out of 5">
+      {%- assign full_stars = rating_val | floor -%}
+      {%- assign half_star = rating_val | minus: full_stars -%}
+      {%- for i in (1..5) -%}
+        {%- if i <= full_stars -%}
+          <span class="ko-star-icon" aria-hidden="true">★</span>
+        {%- elsif forloop.index == full_stars | plus: 1 and half_star >= 0.3 -%}
+          <span class="ko-star-icon" aria-hidden="true">★</span>
+        {%- else -%}
+          <span class="ko-star-icon ko-star-icon--empty" aria-hidden="true">★</span>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if rating_count != blank -%}
+        <span class="ko-stars__count">({{ rating_count }})</span>
+      {%- endif -%}
+    </div>
+
+    <a href="{{ product.url }}" class="ko-product-card__name">{{ product.title | escape }}</a>
+
+    {%- if show_vendor and product.vendor != blank -%}
+      <p class="ko-product-card__variant">{{ product.vendor }}</p>
+    {%- elsif product.metafields.descriptors.subtitle != blank -%}
+      <p class="ko-product-card__variant">{{ product.metafields.descriptors.subtitle }}</p>
+    {%- else -%}
+      {%- assign first_variant = product.variants.first -%}
+      {%- if first_variant.title != 'Default Title' -%}
+        <p class="ko-product-card__variant">{{ first_variant.title }}</p>
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="ko-product-card__price-row">
+      <span class="ko-product-card__price">{{ product.price | money }}</span>
+      {%- if has_compare -%}
+        <span class="ko-product-card__compare">{{ product.compare_at_price_max | money }}</span>
+      {%- endif -%}
+    </div>
+
+    <a
+      href="{{ product.url }}"
+      class="ko-product-card__add-btn{% unless is_available %} ko-product-card__add-btn--soldout{% endunless %}"
+      aria-label="Add {{ product.title | escape }} to cart"
+    >
+      {%- if is_available -%}
+        Add to cart
+      {%- else -%}
+        Sold out
+      {%- endif -%}
+    </a>
+
+  </div>
+</div>

@@ -1,0 +1,397 @@
+
+<section class="kadai-categories" id="KadaiCategories-{{ section.id }}">
+
+  <div class="kadai-categories__inner">
+    <div class="kadai-section-header">
+      <div class="kadai-section-header__text">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="kadai-section-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="kadai-section-title">{{ section.settings.title | default: 'கடை வகைகள்' }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="kadai-section-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.view_all_label != blank and section.settings.view_all_url != blank -%}
+        <a href="{{ section.settings.view_all_url }}" class="kadai-view-all">
+          {{ section.settings.view_all_label }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="kadai-categories__scroll-wrap">
+        <div class="kadai-categories__grid" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category' -%}
+              {%- assign collection = collections[block.settings.collection] -%}
+              {%- assign cat_url = block.settings.custom_url -%}
+              {%- if cat_url == blank and collection != blank -%}
+                {%- assign cat_url = collection.url -%}
+              {%- elsif cat_url == blank -%}
+                {%- assign cat_url = '/collections/all' -%}
+              {%- endif -%}
+
+              <a
+                href="{{ cat_url }}"
+                class="kadai-cat-tile"
+                role="listitem"
+                {{ block.shopify_attributes }}
+              >
+                <div class="kadai-cat-tile__icon-wrap" style="--cat-bg: {{ block.settings.bg_color | default: '#FFF7ED' }}; --cat-color: {{ block.settings.icon_color | default: '#EA580C' }};">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 120
+                      | image_tag:
+                        class: 'kadai-cat-tile__img',
+                        loading: 'lazy',
+                        widths: '60, 90, 120',
+                        sizes: '60px'
+                    }}
+                  {%- elsif block.settings.emoji != blank -%}
+                    <span class="kadai-cat-tile__emoji" aria-hidden="true">{{ block.settings.emoji }}</span>
+                  {%- else -%}
+                    <span class="kadai-cat-tile__emoji" aria-hidden="true">🛒</span>
+                  {%- endif -%}
+                </div>
+                <span class="kadai-cat-tile__label">{{ block.settings.label | default: collection.title | default: 'Category' }}</span>
+                {%- if block.settings.sub_label != blank -%}
+                  <span class="kadai-cat-tile__sub">{{ block.settings.sub_label }}</span>
+                {%- endif -%}
+              </a>
+
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      {%- comment -%} Default placeholder grid when no blocks added {%- endcomment -%}
+      <div class="kadai-categories__scroll-wrap">
+        <div class="kadai-categories__grid" role="list">
+          {%- assign default_categories = 'Rice & Grains,🌾,#FEF9C3,#D97706|Vegetables,🥦,#DCFCE7,#15803D|Fruits,🍎,#FFE4E6,#BE123C|Spices,🌶️,#FEF2F2,#DC2626|Pulses & Dal,🫘,#FFF7ED,#EA580C|Dairy,🥛,#EFF6FF,#2563EB|Snacks,🍿,#F5F3FF,#7C3AED|Oils & Ghee,🫙,#ECFDF5,#059669' | split: '|' -%}
+          {%- for item in default_categories -%}
+            {%- assign parts = item | split: ',' -%}
+            <a href="/collections/all" class="kadai-cat-tile" role="listitem">
+              <div class="kadai-cat-tile__icon-wrap" style="--cat-bg: {{ parts[2] }}; --cat-color: {{ parts[3] }};">
+                <span class="kadai-cat-tile__emoji" aria-hidden="true">{{ parts[1] }}</span>
+              </div>
+              <span class="kadai-cat-tile__label">{{ parts[0] }}</span>
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+</section>
+
+{% stylesheet %}
+  .kadai-categories {
+    background: #FFFFFF;
+    padding: 32px 0 28px;
+  }
+
+  .kadai-categories__inner {
+    padding: 0 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-categories__inner {
+      padding: 0 32px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+  }
+
+  /* Section header */
+  .kadai-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .kadai-section-header__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .kadai-section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #EA580C;
+    margin: 0;
+  }
+
+  .kadai-section-title {
+    font-size: clamp(1.25rem, 4vw, 1.6rem);
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .kadai-section-subtitle {
+    font-size: 13px;
+    color: #6B7280;
+    margin: 2px 0 0;
+  }
+
+  .kadai-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #EA580C;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: gap 0.18s;
+    flex-shrink: 0;
+  }
+
+  .kadai-view-all:hover {
+    gap: 7px;
+  }
+
+  /* Scroll container */
+  .kadai-categories__scroll-wrap {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-categories__scroll-wrap {
+      overflow-x: visible;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .kadai-categories__scroll-wrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Grid */
+  .kadai-categories__grid {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+    padding-bottom: 4px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-categories__grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 14px;
+    }
+  }
+
+  /* Category tile */
+  .kadai-cat-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    width: 78px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-cat-tile {
+      width: auto;
+    }
+  }
+
+  .kadai-cat-tile__icon-wrap {
+    width: 64px;
+    height: 64px;
+    background: var(--cat-bg, #FFF7ED);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-cat-tile__icon-wrap {
+      width: 72px;
+      height: 72px;
+    }
+  }
+
+  .kadai-cat-tile:hover .kadai-cat-tile__icon-wrap,
+  .kadai-cat-tile:focus .kadai-cat-tile__icon-wrap {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+
+  .kadai-cat-tile__emoji {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-cat-tile__emoji {
+      font-size: 32px;
+    }
+  }
+
+  .kadai-cat-tile__img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+  }
+
+  .kadai-cat-tile__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1F2937;
+    text-align: center;
+    line-height: 1.3;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-cat-tile__label {
+      font-size: 13px;
+      white-space: normal;
+    }
+  }
+
+  .kadai-cat-tile__sub {
+    font-size: 10.5px;
+    color: #6B7280;
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KadaiOnline Categories",
+  "tag": "section",
+  "class": "kadai-categories-wrapper section-wrapper",
+  "max_blocks": 16,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category tile",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label (overrides collection title)",
+          "default": "Rice & Grains"
+        },
+        {
+          "type": "text",
+          "id": "sub_label",
+          "label": "Sub-label (optional)",
+          "placeholder": "e.g. 40+ varieties"
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji icon",
+          "default": "🌾"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category image (overrides emoji)"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Icon background color",
+          "default": "#FFF7ED"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon accent color",
+          "default": "#EA580C"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection (sets link)"
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Custom URL (overrides collection)"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Browse"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "கடை வகைகள்"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KadaiOnline Categories",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Rice & Grains", "emoji": "🌾", "bg_color": "#FEF9C3", "icon_color": "#D97706" } },
+        { "type": "category", "settings": { "label": "Vegetables", "emoji": "🥦", "bg_color": "#DCFCE7", "icon_color": "#15803D" } },
+        { "type": "category", "settings": { "label": "Fruits", "emoji": "🍎", "bg_color": "#FFE4E6", "icon_color": "#BE123C" } },
+        { "type": "category", "settings": { "label": "Spices", "emoji": "🌶️", "bg_color": "#FEF2F2", "icon_color": "#DC2626" } },
+        { "type": "category", "settings": { "label": "Pulses & Dal", "emoji": "🫘", "bg_color": "#FFF7ED", "icon_color": "#EA580C" } },
+        { "type": "category", "settings": { "label": "Dairy", "emoji": "🥛", "bg_color": "#EFF6FF", "icon_color": "#2563EB" } },
+        { "type": "category", "settings": { "label": "Snacks", "emoji": "🍿", "bg_color": "#F5F3FF", "icon_color": "#7C3AED" } },
+        { "type": "category", "settings": { "label": "Oils & Ghee", "emoji": "🫙", "bg_color": "#ECFDF5", "icon_color": "#059669" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

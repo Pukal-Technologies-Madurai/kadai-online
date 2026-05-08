@@ -1,0 +1,35 @@
+{%- liquid
+  assign placeholder_data = 'Tangamayil Rice|25KG Weight|250|350|🌾,Corn Puff Masala|250g Pack|50|75|🍿,Butter & Salt Popcorn|200g Pack|80|100|🍿,Organic Quinoa|500g Pack|180|220|🌾,Red Lentils|1KG|95|120|🫘,Steel Cut Oats|500g|145|175|🌾,Mixed Beans|1KG|110|140|🫘,Mung Dal|500g|85|105|🫘' | split: ','
+  assign show_count = count | default: 8
+-%}
+
+{%- for i in (1..show_count) -%}
+  {%- assign pidx = forloop.index0 | modulo: placeholder_data.size -%}
+  {%- assign pdata = placeholder_data[pidx] | split: '|' -%}
+  <div class="ko-product-card">
+    <button class="ko-product-card__wishlist" type="button" aria-label="Wishlist">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </button>
+    <a href="/collections/all" class="ko-product-card__img-wrap" aria-hidden="true" tabindex="-1">
+      <span class="ko-product-card__placeholder-icon" aria-hidden="true">{{ pdata[4] }}</span>
+    </a>
+    <div class="ko-product-card__body">
+      <div class="ko-stars" aria-label="Rated 4.5 out of 5">
+        <span class="ko-star-icon" aria-hidden="true">★</span>
+        <span class="ko-star-icon" aria-hidden="true">★</span>
+        <span class="ko-star-icon" aria-hidden="true">★</span>
+        <span class="ko-star-icon" aria-hidden="true">★</span>
+        <span class="ko-star-icon" aria-hidden="true">★</span>
+      </div>
+      <a href="/collections/all" class="ko-product-card__name">{{ pdata[0] }}</a>
+      <p class="ko-product-card__variant">{{ pdata[1] }}</p>
+      <div class="ko-product-card__price-row">
+        <span class="ko-product-card__price">₹ {{ pdata[2] }}</span>
+        <span class="ko-product-card__compare">₹ {{ pdata[3] }}</span>
+      </div>
+      <a href="/collections/all" class="ko-product-card__add-btn">Add to cart</a>
+    </div>
+  </div>
+{%- endfor -%}

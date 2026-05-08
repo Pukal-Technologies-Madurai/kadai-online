@@ -1,0 +1,214 @@
+
+{%- liquid
+  assign current_collection = collections[section.settings.collection]
+  assign product_limit = section.settings.max_products | default: 8
+-%}
+
+<section class="ko-trending-section" id="KadaiTrending-{{ section.id }}">
+  <div class="ko-trending-inner">
+
+    <div class="ko-section-header">
+      <div class="ko-section-header__left">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ko-section-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="ko-section-title">{{ section.settings.title | default: 'Trending Now 🔥' }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ko-section-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if current_collection != blank -%}
+        <a href="{{ current_collection.url }}" class="ko-view-all-link">
+          {{ section.settings.view_all_label | default: 'View all' }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="ko-product-grid ko-product-grid--scrollable">
+      {%- if current_collection != blank and current_collection.products_count > 0 -%}
+        {%- for product in current_collection.products limit: product_limit -%}
+          {%- liquid
+            assign show_vendor = section.settings.show_vendor
+            render 'ko-product-card', product: product, show_vendor: show_vendor
+          -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign count = product_limit -%}
+        {%- render 'ko-placeholder-cards', count: count -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .ko-trending-section {
+    background: #F9F9F9;
+    padding: 28px 0 32px;
+    border-top: 1px solid var(--ko-border, #E0E0E0);
+  }
+
+  .ko-trending-inner {
+    padding: 0 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ko-trending-inner {
+      padding: 0 24px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+  }
+
+  /* Section header */
+  .ko-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .ko-section-header__left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ko-section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ko-orange, #E8922A);
+    margin: 0;
+  }
+
+  .ko-section-title {
+    font-size: clamp(1.15rem, 3.5vw, 1.5rem);
+    font-weight: 800;
+    color: var(--ko-dark, #1A1A1A);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .ko-section-subtitle {
+    font-size: 13px;
+    color: var(--ko-text-muted, #999);
+    margin: 2px 0 0;
+  }
+
+  .ko-view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ko-orange, #E8922A);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: gap 0.18s;
+  }
+
+  .ko-view-all-link:hover { gap: 6px; }
+
+  /* Scrollable grid on mobile */
+  .ko-product-grid--scrollable {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 0 -16px;
+    padding: 4px 16px 8px;
+    display: flex;
+    gap: 12px;
+    width: auto;
+  }
+
+  .ko-product-grid--scrollable::-webkit-scrollbar { display: none; }
+
+  .ko-product-grid--scrollable .ko-product-card {
+    min-width: 155px;
+    flex-shrink: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ko-product-grid--scrollable {
+      overflow-x: visible;
+      margin: 0;
+      padding: 4px 0 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      gap: 14px;
+    }
+
+    .ko-product-grid--scrollable .ko-product-card {
+      min-width: unset;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KadaiOnline Trending",
+  "tag": "section",
+  "class": "kadai-trending-wrapper section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Popular picks"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Trending Now 🔥"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "இப்போது trend-ல் இருப்பவை"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection to show"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KadaiOnline Trending",
+      "settings": {
+        "max_products": 8
+      }
+    }
+  ]
+}
+{% endschema %}

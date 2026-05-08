@@ -1,0 +1,433 @@
+
+<section class="ko-retailer-cta" id="KadaiRetailerCta-{{ section.id }}">
+
+  {%- if section.settings.bg_image != blank -%}
+    <div class="ko-retailer-cta__media">
+      {{
+        section.settings.bg_image
+        | image_url: width: 1400
+        | image_tag:
+          class: 'ko-retailer-cta__bg-img',
+          loading: 'lazy',
+          widths: '600, 900, 1200, 1400',
+          sizes: '100vw'
+      }}
+    </div>
+  {%- endif -%}
+
+  <div class="ko-retailer-cta__overlay"></div>
+
+  <div class="ko-retailer-cta__inner">
+
+    <div class="ko-retailer-cta__icon-row" aria-hidden="true">
+      <div class="ko-retailer-icon-chip">🏪</div>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+      <div class="ko-retailer-icon-chip">📱</div>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+      <div class="ko-retailer-icon-chip ko-retailer-icon-chip--highlight">🚀</div>
+    </div>
+
+    <div class="ko-retailer-cta__content">
+      <p class="ko-retailer-cta__eyebrow">{{ section.settings.eyebrow | default: 'For Retailers & Vendors' }}</p>
+
+      <h2 class="ko-retailer-cta__headline">
+        {{ section.settings.headline | default: 'உங்கள் கடையை KadaiOnline-ல் சேர்க்கவும்' }}
+      </h2>
+
+      <p class="ko-retailer-cta__sub">
+        {{ section.settings.subheadline | default: 'Join 500+ Tamil Nadu retailers growing their business digitally. Free onboarding. Zero tech expertise needed.' }}
+      </p>
+
+      <div class="ko-retailer-cta__stats">
+        {%- if section.settings.stat_1_number != blank -%}
+          <div class="ko-retailer-stat">
+            <span class="ko-retailer-stat__num">{{ section.settings.stat_1_number }}</span>
+            <span class="ko-retailer-stat__label">{{ section.settings.stat_1_label | default: 'Retailers' }}</span>
+          </div>
+          <div class="ko-retailer-stat-divider"></div>
+        {%- endif -%}
+        {%- if section.settings.stat_2_number != blank -%}
+          <div class="ko-retailer-stat">
+            <span class="ko-retailer-stat__num">{{ section.settings.stat_2_number }}</span>
+            <span class="ko-retailer-stat__label">{{ section.settings.stat_2_label | default: 'Cities' }}</span>
+          </div>
+          <div class="ko-retailer-stat-divider"></div>
+        {%- endif -%}
+        {%- if section.settings.stat_3_number != blank -%}
+          <div class="ko-retailer-stat">
+            <span class="ko-retailer-stat__num">{{ section.settings.stat_3_number }}</span>
+            <span class="ko-retailer-stat__label">{{ section.settings.stat_3_label | default: 'Orders/month' }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="ko-retailer-cta__actions">
+        <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="ko-retailer-btn ko-retailer-btn--primary">
+          {{ section.settings.cta_label | default: 'Partner With Us' }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        {%- if section.settings.secondary_cta_label != blank -%}
+          <a href="{{ section.settings.secondary_cta_url | default: '/pages/contact' }}" class="ko-retailer-btn ko-retailer-btn--outline">
+            {{ section.settings.secondary_cta_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <ul class="ko-retailer-perks">
+        {%- assign default_perks = '✓ Free onboarding & setup|✓ Same-day activation|✓ Real-time sales dashboard|✓ Tamil language support' | split: '|' -%}
+        {%- assign perks_src = section.settings.perks -%}
+        {%- if perks_src != blank -%}
+          {%- assign perks_list = perks_src | split: '|' -%}
+        {%- else -%}
+          {%- assign perks_list = default_perks -%}
+        {%- endif -%}
+        {%- for perk in perks_list -%}
+          <li class="ko-retailer-perk">{{ perk | strip }}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .ko-retailer-cta {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg,
+      #7C2D12 0%,
+      #9A3412 15%,
+      #C2410C 35%,
+      #E8922A 60%,
+      #D97706 80%,
+      #B45309 100%
+    );
+    padding: 0;
+  }
+
+  .ko-retailer-cta::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    top: -250px;
+    right: -200px;
+    pointer-events: none;
+  }
+
+  .ko-retailer-cta__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .ko-retailer-cta__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ko-retailer-cta__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(135deg,
+      rgba(124, 45, 18, 0.92) 0%,
+      rgba(194, 65, 12, 0.85) 50%,
+      rgba(180, 83, 9, 0.82) 100%
+    );
+  }
+
+  .ko-retailer-cta__inner {
+    position: relative;
+    z-index: 2;
+    padding: 52px 20px 48px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ko-retailer-cta__inner {
+      padding: 64px 48px 56px;
+    }
+  }
+
+  /* Icon row */
+  .ko-retailer-cta__icon-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .ko-retailer-icon-chip {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ko-retailer-icon-chip--highlight {
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.35);
+  }
+
+  /* Content */
+  .ko-retailer-cta__content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .ko-retailer-cta__eyebrow {
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #FED7AA;
+    background: rgba(254, 215, 170, 0.12);
+    border: 1px solid rgba(254, 215, 170, 0.30);
+    padding: 5px 12px;
+    border-radius: 9999px;
+    width: fit-content;
+    margin: 0;
+  }
+
+  .ko-retailer-cta__headline {
+    font-size: clamp(1.6rem, 5.5vw, 2.6rem);
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    line-height: 1.18;
+    margin: 0;
+  }
+
+  .ko-retailer-cta__sub {
+    font-size: clamp(0.88rem, 2.5vw, 1rem);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 520px;
+  }
+
+  /* Stats */
+  .ko-retailer-cta__stats {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding: 18px 0;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .ko-retailer-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .ko-retailer-stat__num {
+    font-size: clamp(1.4rem, 4vw, 1.75rem);
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .ko-retailer-stat__label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.60);
+    font-weight: 500;
+  }
+
+  .ko-retailer-stat-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255,255,255,0.20);
+    flex-shrink: 0;
+  }
+
+  /* Buttons */
+  .ko-retailer-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .ko-retailer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 13px 26px;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    letter-spacing: 0.01em;
+  }
+
+  .ko-retailer-btn--primary {
+    background: #FFFFFF;
+    color: #7C2D12;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.20);
+  }
+
+  .ko-retailer-btn--primary:hover {
+    background: #FFF7ED;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  .ko-retailer-btn--outline {
+    background: rgba(255,255,255,0.10);
+    border: 1.5px solid rgba(255,255,255,0.35);
+    color: #FFFFFF;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 12px 22px;
+  }
+
+  .ko-retailer-btn--outline:hover {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.55);
+  }
+
+  /* Perks */
+  .ko-retailer-perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ko-retailer-perk {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.72);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KadaiOnline Retailer CTA",
+  "tag": "section",
+  "class": "kadai-retailer-cta-wrapper section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "For Retailers & Vendors"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "உங்கள் கடையை KadaiOnline-ல் சேர்க்கவும்"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Join 500+ Tamil Nadu retailers growing their business digitally. Free onboarding. Zero tech expertise needed."
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 number",
+      "default": "500+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Retailers"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 number",
+      "default": "12"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Cities"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 number",
+      "default": "50K+"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Orders/month"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Primary CTA",
+      "default": "Partner With Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_label",
+      "label": "Secondary CTA",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "textarea",
+      "id": "perks",
+      "label": "Perks (separate with |)",
+      "placeholder": "✓ Free onboarding|✓ Same-day activation|..."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KadaiOnline Retailer CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -8,283 +8,198 @@
  * ------------------------------------------------------------
  */{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "kadai_hero": {
+      "type": "kadai-hero",
+      "name": "KadaiOnline Homepage Hero",
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "store_shri": {
+          "type": "store",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "name": "Shri Foods"
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "store_sm": {
+          "type": "store",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-secondary",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "name": "SM Traders"
+          }
+        },
+        "store_pukal": {
+          "type": "store",
+          "settings": {
+            "name": "Pukal Foods"
+          }
+        },
+        "brand_cerelia": {
+          "type": "brand",
+          "settings": {
+            "name": "Cerelia"
+          }
+        },
+        "brand_mobite": {
+          "type": "brand",
+          "settings": {
+            "name": "Mobite"
+          }
+        },
+        "cat_rice": {
+          "type": "nav_cat",
+          "settings": {
+            "label": "Rice & Grains",
+            "emoji": "🌾"
+          }
+        },
+        "cat_dal": {
+          "type": "nav_cat",
+          "settings": {
+            "label": "Pulses & Dal",
+            "emoji": "🫘"
+          }
+        },
+        "cat_spices": {
+          "type": "nav_cat",
+          "settings": {
+            "label": "Spices",
+            "emoji": "🌶️"
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
+        "store_shri",
+        "store_sm",
+        "store_pukal",
+        "brand_cerelia",
+        "brand_mobite",
+        "cat_rice",
+        "cat_dal",
+        "cat_spices"
       ],
-      "name": "t:names.hero",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "headline": "SUNLIT HARVEST GRAINS",
+        "subheadline": "NOURISHING EVERY MEAL",
+        "body": "Experience the pure, healthy, organic whole grains, lentils, and pulses, sun-grown and delivered fresh to your kitchen.",
+        "cta_label": "SHOP NOW",
+        "cta_url": "/collections/all"
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "kadai_search": {
+      "type": "kadai-search",
+      "name": "KadaiOnline Search",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "chip_dal": {
+          "type": "chip",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "emoji": "🫘",
+            "label": "பருப்பு",
+            "url": "/collections/all"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "chip_rice": {
+          "type": "chip",
           "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "emoji": "🌾",
+            "label": "அரிசி",
+            "url": "/collections/all"
+          }
+        },
+        "chip_wheat": {
+          "type": "chip",
+          "settings": {
+            "emoji": "🌿",
+            "label": "கோதுமை",
+            "url": "/collections/all"
+          }
+        },
+        "chip_spices": {
+          "type": "chip",
+          "settings": {
+            "emoji": "🌶️",
+            "label": "மசாலா",
+            "url": "/collections/all"
+          }
+        },
+        "chip_greens": {
+          "type": "chip",
+          "settings": {
+            "emoji": "🥗",
+            "label": "தட்டை",
+            "url": "/collections/all"
+          }
+        },
+        "chip_dairy": {
+          "type": "chip",
+          "settings": {
+            "emoji": "🥛",
+            "label": "பால் பொருட்கள்",
+            "url": "/collections/all"
+          }
+        },
+        "chip_snacks": {
+          "type": "chip",
+          "settings": {
+            "emoji": "🍿",
+            "label": "தின்பண்டம்",
+            "url": "/collections/all"
+          }
+        },
+        "chip_oils": {
+          "type": "chip",
+          "settings": {
+            "emoji": "🫙",
+            "label": "எண்ணெய்",
+            "url": "/collections/all"
+          }
         }
       },
-      "name": "Featured collection",
+      "block_order": [
+        "chip_dal",
+        "chip_rice",
+        "chip_wheat",
+        "chip_spices",
+        "chip_greens",
+        "chip_dairy",
+        "chip_snacks",
+        "chip_oils"
+      ],
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
+        "placeholder": "Search for rice, dal, spices…"
+      }
+    },
+    "kadai_product_tabs": {
+      "type": "kadai-product-tabs",
+      "name": "KadaiOnline Product Tabs",
+      "settings": {
+        "tab_bestseller": "Best Seller",
+        "tab_latest": "Latest",
+        "tab_featured": "Featured",
         "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "show_vendor": false
+      }
+    },
+    "kadai_retailer_cta": {
+      "type": "kadai-retailer-cta",
+      "name": "KadaiOnline Retailer CTA",
+      "settings": {
+        "eyebrow": "For Retailers & Vendors",
+        "headline": "உங்கள் கடையை KadaiOnline-ல் சேர்க்கவும்",
+        "subheadline": "Join 500+ Tamil Nadu retailers growing their business digitally. Free onboarding. Zero tech expertise needed.",
+        "stat_1_number": "500+",
+        "stat_1_label": "Retailers",
+        "stat_2_number": "12",
+        "stat_2_label": "Cities",
+        "stat_3_number": "50K+",
+        "stat_3_label": "Orders/month",
+        "cta_label": "Partner With Us",
+        "cta_url": "/pages/contact",
+        "secondary_cta_label": "Learn more",
+        "secondary_cta_url": "/pages/contact"
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "kadai_hero",
+    "kadai_search",
+    "kadai_product_tabs",
+    "kadai_retailer_cta"
   ]
 }

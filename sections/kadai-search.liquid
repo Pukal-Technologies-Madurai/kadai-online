@@ -1,0 +1,239 @@
+
+<div class="ko-search-bar-section" id="KadaiSearch-{{ section.id }}">
+  <div class="ko-search-bar-inner">
+
+    <a href="{{ section.settings.search_url | default: '/search' }}" class="ko-search-field" aria-label="{{ section.settings.placeholder | default: 'Search products…' }}">
+      <svg class="ko-search-field__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <span class="ko-search-field__placeholder">{{ section.settings.placeholder | default: 'Search for rice, dal, spices…' }}</span>
+      <span class="ko-search-field__mic" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+      </span>
+    </a>
+
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="ko-category-chips-wrap" aria-label="Quick categories">
+      <div class="ko-category-chips">
+        <button class="ko-cat-chip ko-cat-chip--all ko-cat-chip--active" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+          </svg>
+        </button>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'chip' -%}
+            <a
+              href="{{ block.settings.url | default: '/collections/all' }}"
+              class="ko-cat-chip"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.emoji != blank -%}
+                <span class="ko-cat-chip__emoji" aria-hidden="true">{{ block.settings.emoji }}</span>
+              {%- endif -%}
+              {{ block.settings.label }}
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .ko-search-bar-section {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--ko-border, #E0E0E0);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .ko-search-bar-inner {
+    padding: 12px 16px 0;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ko-search-bar-inner {
+      padding: 14px 24px 0;
+    }
+  }
+
+  .ko-search-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #F5F5F5;
+    border: 1.5px solid var(--ko-border, #E0E0E0);
+    border-radius: 10px;
+    padding: 11px 14px;
+    text-decoration: none;
+    cursor: text;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .ko-search-field:hover,
+  .ko-search-field:focus-within {
+    background: #FFFFFF;
+    border-color: var(--ko-orange, #E8922A);
+    box-shadow: 0 0 0 3px rgba(232, 146, 42, 0.12);
+  }
+
+  .ko-search-field__icon { color: #AAAAAA; flex-shrink: 0; }
+
+  .ko-search-field__placeholder {
+    flex: 1;
+    font-size: 14px;
+    color: #AAAAAA;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ko-search-field__mic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--ko-orange-light, #FEF3E0);
+    color: var(--ko-orange, #E8922A);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.18s;
+  }
+
+  .ko-search-field__mic:hover { background: #FDDBB0; }
+
+  /* Category chips */
+  .ko-category-chips-wrap {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .ko-category-chips-wrap::-webkit-scrollbar { display: none; }
+
+  @media screen and (min-width: 750px) {
+    .ko-category-chips-wrap { padding: 0 24px; }
+  }
+
+  .ko-category-chips {
+    display: flex;
+    gap: 8px;
+    padding: 10px 0 12px;
+    width: max-content;
+    min-width: 100%;
+    align-items: center;
+  }
+
+  .ko-cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ko-text, #333);
+    background: #FFFFFF;
+    border: 1.5px solid var(--ko-border, #E0E0E0);
+    border-radius: 9999px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+
+  .ko-cat-chip--all {
+    padding: 6px 10px;
+    color: var(--ko-text-muted, #999);
+  }
+
+  .ko-cat-chip--active {
+    background: var(--ko-orange, #E8922A);
+    border-color: var(--ko-orange, #E8922A);
+    color: #FFFFFF;
+  }
+
+  .ko-cat-chip:hover:not(.ko-cat-chip--active) {
+    border-color: var(--ko-orange, #E8922A);
+    color: var(--ko-orange, #E8922A);
+    background: var(--ko-orange-light, #FEF3E0);
+  }
+
+  .ko-cat-chip__emoji { font-size: 14px; line-height: 1; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KadaiOnline Search Bar",
+  "tag": "div",
+  "class": "kadai-search-wrapper",
+  "max_blocks": 16,
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Category chip",
+      "settings": [
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji",
+          "default": "🌾"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label (Tamil or English)",
+          "default": "பருப்பு"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Search placeholder",
+      "default": "Search for rice, dal, spices…"
+    },
+    {
+      "type": "url",
+      "id": "search_url",
+      "label": "Search page URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KadaiOnline Search Bar",
+      "blocks": [
+        { "type": "chip", "settings": { "emoji": "🫘", "label": "பருப்பு" } },
+        { "type": "chip", "settings": { "emoji": "🌾", "label": "அரிசி" } },
+        { "type": "chip", "settings": { "emoji": "🌿", "label": "கோதுமை" } },
+        { "type": "chip", "settings": { "emoji": "🌶️", "label": "மசாலா" } },
+        { "type": "chip", "settings": { "emoji": "🥗", "label": "தட்டை" } },
+        { "type": "chip", "settings": { "emoji": "🥛", "label": "பால் பொருட்கள்" } },
+        { "type": "chip", "settings": { "emoji": "🍿", "label": "தின்பண்டம்" } },
+        { "type": "chip", "settings": { "emoji": "🫙", "label": "எண்ணெய்" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

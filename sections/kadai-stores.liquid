@@ -1,0 +1,533 @@
+
+<section class="kadai-stores" id="KadaiStores-{{ section.id }}">
+
+  <div class="kadai-stores__inner">
+
+    <div class="kadai-section-header">
+      <div class="kadai-section-header__text">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="kadai-section-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="kadai-section-title">{{ section.settings.title | default: 'Featured Stores' }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="kadai-section-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.view_all_label != blank and section.settings.view_all_url != blank -%}
+        <a href="{{ section.settings.view_all_url }}" class="kadai-view-all">
+          {{ section.settings.view_all_label }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="kadai-stores__scroll-wrap">
+      <div class="kadai-stores__row" role="list">
+
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'store' -%}
+              {%- assign store_collection = collections[block.settings.collection] -%}
+              {%- assign store_url = block.settings.custom_url -%}
+              {%- if store_url == blank and store_collection != blank -%}
+                {%- assign store_url = store_collection.url -%}
+              {%- elsif store_url == blank -%}
+                {%- assign store_url = '/collections/all' -%}
+              {%- endif -%}
+
+              <a href="{{ store_url }}" class="kadai-store-card" role="listitem" {{ block.shopify_attributes }}>
+
+                <div
+                  class="kadai-store-card__header"
+                  style="--store-gradient-from: {{ block.settings.gradient_from | default: '#0F4C28' }}; --store-gradient-to: {{ block.settings.gradient_to | default: '#EA580C' }};"
+                >
+                  {%- if block.settings.cover_image != blank -%}
+                    {{
+                      block.settings.cover_image
+                      | image_url: width: 400
+                      | image_tag:
+                        class: 'kadai-store-card__cover',
+                        loading: 'lazy',
+                        widths: '200, 320, 400',
+                        sizes: '220px'
+                    }}
+                  {%- endif -%}
+
+                  <div class="kadai-store-card__badges">
+                    {%- if block.settings.is_open -%}
+                      <span class="kadai-badge kadai-badge--open">Open</span>
+                    {%- else -%}
+                      <span class="kadai-badge kadai-badge--closed">Closed</span>
+                    {%- endif -%}
+                    {%- if block.settings.promo_badge != blank -%}
+                      <span class="kadai-badge kadai-badge--promo">{{ block.settings.promo_badge }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- if block.settings.logo != blank -%}
+                    <div class="kadai-store-card__logo-wrap">
+                      {{
+                        block.settings.logo
+                        | image_url: width: 100
+                        | image_tag:
+                          class: 'kadai-store-card__logo',
+                          loading: 'lazy',
+                          widths: '60, 80, 100',
+                          sizes: '52px'
+                      }}
+                    </div>
+                  {%- else -%}
+                    <div class="kadai-store-card__logo-wrap kadai-store-card__logo-wrap--placeholder">
+                      <span>{{ block.settings.name | default: store_collection.title | default: 'S' | upcase | slice: 0 }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <div class="kadai-store-card__body">
+                  <h3 class="kadai-store-card__name">
+                    {{ block.settings.name | default: store_collection.title | default: 'Local Store' }}
+                  </h3>
+                  {%- if block.settings.description != blank -%}
+                    <p class="kadai-store-card__desc">{{ block.settings.description }}</p>
+                  {%- elsif store_collection.description != blank -%}
+                    <p class="kadai-store-card__desc">{{ store_collection.description | strip_html | truncate: 60 }}</p>
+                  {%- endif -%}
+
+                  <div class="kadai-store-card__meta">
+                    {%- if block.settings.rating != blank -%}
+                      <span class="kadai-store-meta-item">
+                        <span class="kadai-star" aria-hidden="true">★</span>
+                        {{ block.settings.rating }}
+                      </span>
+                    {%- endif -%}
+                    {%- if block.settings.delivery_time != blank -%}
+                      <span class="kadai-store-meta-sep" aria-hidden="true">·</span>
+                      <span class="kadai-store-meta-item">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                        </svg>
+                        {{ block.settings.delivery_time }}
+                      </span>
+                    {%- endif -%}
+                    {%- if block.settings.min_order != blank -%}
+                      <span class="kadai-store-meta-sep" aria-hidden="true">·</span>
+                      <span class="kadai-store-meta-item">₹{{ block.settings.min_order }} min</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+
+        {%- else -%}
+          {%- comment -%} Placeholder store cards {%- endcomment -%}
+          {%- assign placeholder_stores = 'Murugan Provision|Coimbatore|4.8|25-35 min|199|#064E3B|#16A34A|true|20% off first order,Sri Lakshmi Fresh|Chennai|4.6|20-30 min|149|#1E3A8A|#3B82F6|true|Free delivery,Senthil Supermart|Madurai|4.7|30-40 min|299|#7C2D12|#EA580C|true|,Rajan Kirana|Trichy|4.5|35-45 min|249|#4C1D95|#8B5CF6|false|' | split: ',' -%}
+          {%- for store in placeholder_stores -%}
+            {%- assign sp = store | split: '|' -%}
+            <a href="/collections/all" class="kadai-store-card" role="listitem">
+              <div class="kadai-store-card__header" style="--store-gradient-from: {{ sp[5] }}; --store-gradient-to: {{ sp[6] }};">
+                <div class="kadai-store-card__badges">
+                  {%- if sp[7] == 'true' -%}
+                    <span class="kadai-badge kadai-badge--open">Open</span>
+                  {%- else -%}
+                    <span class="kadai-badge kadai-badge--closed">Closed</span>
+                  {%- endif -%}
+                  {%- if sp[8] != blank -%}
+                    <span class="kadai-badge kadai-badge--promo">{{ sp[8] }}</span>
+                  {%- endif -%}
+                </div>
+                <div class="kadai-store-card__logo-wrap kadai-store-card__logo-wrap--placeholder">
+                  <span>{{ sp[0] | slice: 0 }}</span>
+                </div>
+              </div>
+              <div class="kadai-store-card__body">
+                <h3 class="kadai-store-card__name">{{ sp[0] }}</h3>
+                <p class="kadai-store-card__desc">{{ sp[1] }}</p>
+                <div class="kadai-store-card__meta">
+                  <span class="kadai-store-meta-item"><span class="kadai-star">★</span> {{ sp[2] }}</span>
+                  <span class="kadai-store-meta-sep">·</span>
+                  <span class="kadai-store-meta-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    {{ sp[3] }}
+                  </span>
+                  <span class="kadai-store-meta-sep">·</span>
+                  <span class="kadai-store-meta-item">₹{{ sp[4] }} min</span>
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .kadai-stores {
+    background: #F9FAFB;
+    padding: 32px 0 28px;
+  }
+
+  .kadai-stores__inner {
+    padding: 0 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-stores__inner {
+      padding: 0 32px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+  }
+
+  /* Horizontal scroll */
+  .kadai-stores__scroll-wrap {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 0 -16px;
+    padding: 4px 16px 8px;
+  }
+
+  .kadai-stores__scroll-wrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-stores__scroll-wrap {
+      overflow-x: visible;
+      margin: 0;
+      padding: 4px 0 8px;
+    }
+  }
+
+  .kadai-stores__row {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-stores__row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+  }
+
+  /* Store card */
+  .kadai-store-card {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    flex-shrink: 0;
+    background: #FFFFFF;
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 750px) {
+    .kadai-store-card {
+      width: auto;
+    }
+  }
+
+  .kadai-store-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  /* Card header / cover area */
+  .kadai-store-card__header {
+    position: relative;
+    height: 100px;
+    background: linear-gradient(135deg, var(--store-gradient-from, #0F4C28) 0%, var(--store-gradient-to, #EA580C) 100%);
+    overflow: hidden;
+  }
+
+  .kadai-store-card__header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='20' cy='20' r='15'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .kadai-store-card__cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Badges */
+  .kadai-store-card__badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 2;
+    flex-wrap: wrap;
+  }
+
+  .kadai-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+  }
+
+  .kadai-badge--open {
+    background: #DCFCE7;
+    color: #15803D;
+  }
+
+  .kadai-badge--closed {
+    background: #FEE2E2;
+    color: #DC2626;
+  }
+
+  .kadai-badge--promo {
+    background: rgba(234, 88, 12, 0.92);
+    color: #FFFFFF;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* Logo */
+  .kadai-store-card__logo-wrap {
+    position: absolute;
+    bottom: -18px;
+    left: 14px;
+    width: 52px;
+    height: 52px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    border: 2.5px solid #FFFFFF;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kadai-store-card__logo-wrap--placeholder {
+    background: linear-gradient(135deg, #EA580C, #C2410C);
+  }
+
+  .kadai-store-card__logo-wrap--placeholder span {
+    font-size: 20px;
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+
+  .kadai-store-card__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Card body */
+  .kadai-store-card__body {
+    padding: 24px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .kadai-store-card__name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .kadai-store-card__desc {
+    font-size: 12.5px;
+    color: #6B7280;
+    margin: 0;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .kadai-store-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .kadai-store-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .kadai-store-meta-sep {
+    color: #D1D5DB;
+    font-size: 14px;
+  }
+
+  .kadai-star {
+    color: #F59E0B;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KadaiOnline Stores",
+  "tag": "section",
+  "class": "kadai-stores-wrapper section-wrapper",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Featured store",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Store name",
+          "default": "Murugan Provision"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Short description",
+          "default": "Coimbatore"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Store logo"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image",
+          "label": "Cover image"
+        },
+        {
+          "type": "color",
+          "id": "gradient_from",
+          "label": "Gradient start color",
+          "default": "#064E3B"
+        },
+        {
+          "type": "color",
+          "id": "gradient_to",
+          "label": "Gradient end color",
+          "default": "#16A34A"
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating",
+          "default": "4.8"
+        },
+        {
+          "type": "text",
+          "id": "delivery_time",
+          "label": "Delivery time",
+          "default": "25–35 min"
+        },
+        {
+          "type": "text",
+          "id": "min_order",
+          "label": "Minimum order (₹)",
+          "default": "199"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_open",
+          "label": "Currently open",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "promo_badge",
+          "label": "Promo badge text (optional)",
+          "placeholder": "e.g. 20% off"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Linked collection"
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Custom URL (overrides collection)"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Near You"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Featured Stores"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "அருகிலுள்ள சிறப்பு கடைகள்"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "See all stores"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KadaiOnline Stores",
+      "blocks": [
+        { "type": "store", "settings": { "name": "Murugan Provision", "description": "Coimbatore", "rating": "4.8", "delivery_time": "25–35 min", "min_order": "199", "is_open": true, "promo_badge": "20% off first order", "gradient_from": "#064E3B", "gradient_to": "#16A34A" } },
+        { "type": "store", "settings": { "name": "Sri Lakshmi Fresh", "description": "Chennai", "rating": "4.6", "delivery_time": "20–30 min", "min_order": "149", "is_open": true, "promo_badge": "Free delivery", "gradient_from": "#1E3A8A", "gradient_to": "#3B82F6" } },
+        { "type": "store", "settings": { "name": "Senthil Supermart", "description": "Madurai", "rating": "4.7", "delivery_time": "30–40 min", "min_order": "299", "is_open": true, "gradient_from": "#7C2D12", "gradient_to": "#EA580C" } },
+        { "type": "store", "settings": { "name": "Rajan Kirana", "description": "Trichy", "rating": "4.5", "delivery_time": "35–45 min", "min_order": "249", "is_open": false, "gradient_from": "#4C1D95", "gradient_to": "#8B5CF6" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
