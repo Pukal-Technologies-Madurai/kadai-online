@@ -9,6 +9,26 @@
 <section class="ko-product-tabs-section" id="KadaiProductTabs-{{ section.id }}">
   <div class="ko-product-tabs-inner">
 
+    {%- comment -%} ─── SECTION HEADER ─── {%- endcomment -%}
+    <div class="ko-section-header">
+      <div class="ko-section-header__title-wrap">
+        {%- if section.settings.section_eyebrow != blank -%}
+          <p class="ko-section-header__eyebrow">{{ section.settings.section_eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="ko-section-header__title">
+          {{ section.settings.section_title | default: 'Best Seller Products' }}
+        </h2>
+      </div>
+      {%- if section.settings.view_all_url != blank -%}
+        <a href="{{ section.settings.view_all_url }}" class="ko-section-header__link">
+          {{ section.settings.view_all_label | default: 'View All' }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </div>
+
     {%- comment -%} ─── TAB NAV ─── {%- endcomment -%}
     <div class="ko-tabs-nav" role="tablist" aria-label="Product tabs">
       <button
@@ -138,8 +158,12 @@
   /* ─── Product tabs section ──────────────────────── */
   .ko-product-tabs-section {
     background: #FFFFFF;
-    padding: 20px 0 32px;
+    padding: 28px 0 36px;
     border-top: 1px solid var(--ko-border, #E0E0E0);
+  }
+
+  @media screen and (min-width: 750px) {
+    .ko-product-tabs-section { padding: 40px 0 52px; }
   }
 
   .ko-product-tabs-inner {
@@ -149,9 +173,55 @@
   @media screen and (min-width: 750px) {
     .ko-product-tabs-inner {
       padding: 0 24px;
-      max-width: 1280px;
+      max-width: 1400px;
       margin: 0 auto;
     }
+  }
+
+  /* ─── Section header ────────────────────────────── */
+  .ko-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 4px;
+  }
+
+  .ko-section-header__eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ko-orange, #E8922A);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+  }
+
+  .ko-section-header__title {
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    font-weight: 800;
+    color: var(--ko-dark, #1A1A1A);
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .ko-section-header__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ko-orange, #E8922A);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 6px 4px;
+    transition: color 0.15s, gap 0.15s;
+  }
+
+  .ko-section-header__link:hover {
+    color: var(--ko-orange-hover, #CF7E1F);
+    gap: 8px;
   }
 
   /* ─── Tab nav ──────────────────────────────────── */
@@ -422,6 +492,33 @@
   "tag": "section",
   "class": "kadai-product-tabs-wrapper section-wrapper",
   "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "section_eyebrow",
+      "label": "Eyebrow",
+      "default": "🔥 Trending Now"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Best Seller Products"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View-all link label",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View-all link URL"
+    },
     {
       "type": "header",
       "content": "Tab labels"

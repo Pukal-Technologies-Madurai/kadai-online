@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sidebar accordion preview</title>
+<style>
+:root{--ko-orange:#E8922A;--ko-orange-hover:#CF7E1F;--ko-orange-light:#FEF3E0;--ko-text:#333;--ko-text-gray:#666;--ko-text-muted:#999;--ko-border:#E0E0E0}
+*{box-sizing:border-box}body{margin:0;padding:24px;font-family:-apple-system,system-ui,sans-serif;background:#eee;color:var(--ko-text)}
+.frames{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.frame{background:#fff;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.08);overflow:hidden}
+.frame--mobile{width:380px}
+.frame--desktop{width:380px}
+.frame__label{padding:8px 12px;font-size:12px;font-weight:700;color:#666;background:#fafafa;border-bottom:1px solid #eee}
+.frame__inner{padding:16px;background:#fff}
+
+.ko-sidebar{display:flex;flex-direction:column;background:#fff;border:1px solid var(--ko-border);border-radius:14px;overflow:hidden}
+.ko-sidebar__item{display:flex;flex-direction:column;border-bottom:1px solid var(--ko-border)}
+.ko-sidebar__item:last-child{border-bottom:none}
+.ko-sidebar-tab{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:14px 16px;font-size:14px;font-weight:700;color:var(--ko-text);background:#FAFAFA;border:none;cursor:pointer;text-align:left;line-height:1}
+.ko-sidebar-tab:hover{background:var(--ko-orange-light);color:var(--ko-orange)}
+.ko-sidebar-tab--active{background:var(--ko-orange);color:#fff}
+.ko-sidebar-tab--active:hover{background:var(--ko-orange-hover);color:#fff}
+.ko-sidebar-tab__chevron{transition:transform .22s;flex-shrink:0;opacity:.7}
+.ko-sidebar-tab--active .ko-sidebar-tab__chevron{transform:rotate(180deg);opacity:1}
+.ko-sidebar-panel{overflow-y:auto;padding:4px 0;max-height:320px;background:#fff;border-top:1px solid #F0F0F0}
+.ko-sidebar-panel--hidden{display:none}
+.ko-store-row{display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--ko-text);border-bottom:1px solid #F4F4F4;font-size:14px}
+.ko-store-row:last-child{border-bottom:none}
+.ko-store-row__logo{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:var(--ko-orange-light);display:flex;align-items:center;justify-content:center;border:1px solid var(--ko-border);font-size:14px;font-weight:800;color:var(--ko-orange)}
+.ko-store-row__logo--emoji{font-size:20px;background:#FFF3E0;color:inherit}
+.ko-store-row__name{flex:1;font-weight:600}
+.ko-store-row__arrow{color:#bbb;flex-shrink:0}
+
+@media (min-width:750px){
+  .ko-sidebar{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto 1fr}
+  .ko-sidebar__item{display:contents;border-bottom:none}
+  .ko-sidebar-tab{grid-row:1;padding:11px 8px;font-size:13px;justify-content:center;background:#FAFAFA;border-bottom:1px solid var(--ko-border);border-right:1px solid var(--ko-border)}
+  .ko-sidebar__item:last-child .ko-sidebar-tab{border-right:none}
+  .ko-sidebar-tab__chevron{display:none}
+  .ko-sidebar-tab--active{box-shadow:0 2px 6px rgba(232,146,42,.3)}
+  .ko-sidebar-panel{grid-row:2;grid-column:1 / -1;max-height:none;border-top:none}
+}
+
+/* Force desktop preview to look like the desktop layout even at 380px */
+.frame--desktop .ko-sidebar{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto 1fr}
+.frame--desktop .ko-sidebar__item{display:contents}
+.frame--desktop .ko-sidebar-tab{grid-row:1;padding:11px 8px;font-size:13px;justify-content:center;background:#FAFAFA;border-bottom:1px solid var(--ko-border);border-right:1px solid var(--ko-border)}
+.frame--desktop .ko-sidebar__item:last-child .ko-sidebar-tab{border-right:none}
+.frame--desktop .ko-sidebar-tab__chevron{display:none}
+.frame--desktop .ko-sidebar-panel{grid-row:2;grid-column:1 / -1;max-height:none;border-top:none}
+</style></head><body>
+
+<div class="frames">
+
+  <!-- MOBILE accordion -->
+  <div class="frame frame--mobile">
+    <div class="frame__label">MOBILE — accordion (Brand open, 12 items)</div>
+    <div class="frame__inner">
+      <aside class="ko-sidebar">
+        <div class="ko-sidebar__item">
+          <button class="ko-sidebar-tab" data-key="shops"><span>Shop's</span><svg class="ko-sidebar-tab__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ko-sidebar-panel ko-sidebar-panel--hidden"></div>
+        </div>
+        <div class="ko-sidebar__item">
+          <button class="ko-sidebar-tab ko-sidebar-tab--active" data-key="brands"><span>Brand</span><svg class="ko-sidebar-tab__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ko-sidebar-panel">
+            <a class="ko-store-row"><div class="ko-store-row__logo">C</div><span class="ko-store-row__name">Cerelia</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">M</div><span class="ko-store-row__name">Mobite</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">A</div><span class="ko-store-row__name">Aachi Masala</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">S</div><span class="ko-store-row__name">Sakthi Masala</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">M</div><span class="ko-store-row__name">MTR</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">P</div><span class="ko-store-row__name">Patanjali</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">D</div><span class="ko-store-row__name">Dabur</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">B</div><span class="ko-store-row__name">Britannia</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">P</div><span class="ko-store-row__name">Parle</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">A</div><span class="ko-store-row__name">Amul</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">N</div><span class="ko-store-row__name">Nandini</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">H</div><span class="ko-store-row__name">Heritage Foods</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+          </div>
+        </div>
+        <div class="ko-sidebar__item">
+          <button class="ko-sidebar-tab" data-key="categories"><span>Category</span><svg class="ko-sidebar-tab__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ko-sidebar-panel ko-sidebar-panel--hidden"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- DESKTOP tabs -->
+  <div class="frame frame--desktop">
+    <div class="frame__label">DESKTOP — tabs row + single panel</div>
+    <div class="frame__inner">
+      <aside class="ko-sidebar">
+        <div class="ko-sidebar__item">
+          <button class="ko-sidebar-tab ko-sidebar-tab--active"><span>Shop's</span><svg class="ko-sidebar-tab__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ko-sidebar-panel">
+            <a class="ko-store-row"><div class="ko-store-row__logo">S</div><span class="ko-store-row__name">Shri Foods</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">SM</div><span class="ko-store-row__name">SM Traders</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a class="ko-store-row"><div class="ko-store-row__logo">P</div><span class="ko-store-row__name">Pukal Foods</span><svg class="ko-store-row__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+          </div>
+        </div>
+        <div class="ko-sidebar__item">
+          <button class="ko-sidebar-tab"><span>Brand</span><svg class="ko-sidebar-tab__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ko-sidebar-panel ko-sidebar-panel--hidden"></div>
+        </div>
+        <div class="ko-sidebar__item">
+          <button class="ko-sidebar-tab"><span>Category</span><svg class="ko-sidebar-tab__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ko-sidebar-panel ko-sidebar-panel--hidden"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// click handlers for mobile preview
+document.querySelectorAll('.frame--mobile .ko-sidebar-tab').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var item = btn.parentElement;
+    var open = btn.classList.contains('ko-sidebar-tab--active');
+    btn.parentElement.parentElement.querySelectorAll('.ko-sidebar-tab').forEach(function(b){ b.classList.remove('ko-sidebar-tab--active'); });
+    btn.parentElement.parentElement.querySelectorAll('.ko-sidebar-panel').forEach(function(p){ p.classList.add('ko-sidebar-panel--hidden'); });
+    if (!open) {
+      btn.classList.add('ko-sidebar-tab--active');
+      btn.nextElementSibling.classList.remove('ko-sidebar-panel--hidden');
+    }
+  });
+});
+</script>
+</body></html>

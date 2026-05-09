@@ -169,6 +169,10 @@
       "type": "kadai-product-tabs",
       "name": "KadaiOnline Product Tabs",
       "settings": {
+        "section_eyebrow": "🔥 Trending Now",
+        "section_title": "Best Seller Products",
+        "view_all_label": "View All",
+        "view_all_url": "/collections/all",
         "tab_bestseller": "Best Seller",
         "tab_latest": "Latest",
         "tab_featured": "Featured",
