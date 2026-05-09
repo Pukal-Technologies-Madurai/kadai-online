@@ -6,61 +6,75 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "kadai_hero": {
       "type": "kadai-hero",
-      "name": "KadaiOnline Homepage Hero",
       "blocks": {
         "store_shri": {
           "type": "store",
           "settings": {
-            "name": "Shri Foods"
+            "name": "Shri Foods",
+            "collection": "",
+            "custom_url": ""
           }
         },
         "store_sm": {
           "type": "store",
           "settings": {
-            "name": "SM Traders"
+            "name": "SM Traders",
+            "collection": "",
+            "custom_url": ""
           }
         },
         "store_pukal": {
           "type": "store",
           "settings": {
-            "name": "Pukal Foods"
+            "name": "Pukal Foods",
+            "collection": "",
+            "custom_url": ""
           }
         },
         "brand_cerelia": {
           "type": "brand",
           "settings": {
-            "name": "Cerelia"
+            "name": "Cerelia",
+            "url": ""
           }
         },
         "brand_mobite": {
           "type": "brand",
           "settings": {
-            "name": "Mobite"
+            "name": "Mobite",
+            "url": ""
           }
         },
         "cat_rice": {
           "type": "nav_cat",
           "settings": {
             "label": "Rice & Grains",
-            "emoji": "🌾"
+            "emoji": "🌾",
+            "collection": "",
+            "custom_url": ""
           }
         },
         "cat_dal": {
           "type": "nav_cat",
           "settings": {
             "label": "Pulses & Dal",
-            "emoji": "🫘"
+            "emoji": "🫘",
+            "collection": "",
+            "custom_url": ""
           }
         },
         "cat_spices": {
           "type": "nav_cat",
           "settings": {
             "label": "Spices",
-            "emoji": "🌶️"
+            "emoji": "🌶️",
+            "collection": "",
+            "custom_url": ""
           }
         }
       },
@@ -74,95 +88,14 @@
         "cat_dal",
         "cat_spices"
       ],
+      "name": "KadaiOnline Homepage Hero",
       "settings": {
+        "eyebrow": "🌿 Organic & Fresh",
         "headline": "SUNLIT HARVEST GRAINS",
         "subheadline": "NOURISHING EVERY MEAL",
         "body": "Experience the pure, healthy, organic whole grains, lentils, and pulses, sun-grown and delivered fresh to your kitchen.",
         "cta_label": "SHOP NOW",
         "cta_url": "/collections/all"
-      }
-    },
-    "kadai_search": {
-      "type": "kadai-search",
-      "name": "KadaiOnline Search",
-      "blocks": {
-        "chip_dal": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🫘",
-            "label": "பருப்பு",
-            "url": "/collections/all"
-          }
-        },
-        "chip_rice": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🌾",
-            "label": "அரிசி",
-            "url": "/collections/all"
-          }
-        },
-        "chip_wheat": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🌿",
-            "label": "கோதுமை",
-            "url": "/collections/all"
-          }
-        },
-        "chip_spices": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🌶️",
-            "label": "மசாலா",
-            "url": "/collections/all"
-          }
-        },
-        "chip_greens": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🥗",
-            "label": "தட்டை",
-            "url": "/collections/all"
-          }
-        },
-        "chip_dairy": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🥛",
-            "label": "பால் பொருட்கள்",
-            "url": "/collections/all"
-          }
-        },
-        "chip_snacks": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🍿",
-            "label": "தின்பண்டம்",
-            "url": "/collections/all"
-          }
-        },
-        "chip_oils": {
-          "type": "chip",
-          "settings": {
-            "emoji": "🫙",
-            "label": "எண்ணெய்",
-            "url": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "chip_dal",
-        "chip_rice",
-        "chip_wheat",
-        "chip_spices",
-        "chip_greens",
-        "chip_dairy",
-        "chip_snacks",
-        "chip_oils"
-      ],
-      "settings": {
-        "placeholder": "Search for rice, dal, spices…"
       }
     },
     "kadai_product_tabs": {
@@ -176,6 +109,9 @@
         "tab_bestseller": "Best Seller",
         "tab_latest": "Latest",
         "tab_featured": "Featured",
+        "collection_bestseller": "",
+        "collection_latest": "",
+        "collection_featured": "",
         "max_products": 8,
         "show_vendor": false
       }
@@ -196,13 +132,13 @@
         "cta_label": "Partner With Us",
         "cta_url": "/pages/contact",
         "secondary_cta_label": "Learn more",
-        "secondary_cta_url": "/pages/contact"
+        "secondary_cta_url": "/pages/contact",
+        "perks": ""
       }
     }
   },
   "order": [
     "kadai_hero",
-    "kadai_search",
     "kadai_product_tabs",
     "kadai_retailer_cta"
   ]
