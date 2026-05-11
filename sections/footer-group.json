@@ -141,9 +141,9 @@
       ],
       "name": "t:names.footer",
       "settings": {
-        "section_width": "page-width",
+        "section_width": "full-width",
         "gap": 20,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-537275f4-6db6-4f1b-85df-d19cecfc4726",
         "padding-block-start": 36,
         "padding-block-end": 36
       }
