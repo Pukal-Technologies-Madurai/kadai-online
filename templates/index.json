@@ -109,8 +109,8 @@
         "tab_bestseller": "Best Seller",
         "tab_latest": "Latest",
         "tab_featured": "Featured",
-        "collection_bestseller": "",
-        "collection_latest": "",
+        "collection_bestseller": "mobite",
+        "collection_latest": "cerelia",
         "collection_featured": "",
         "max_products": 8,
         "show_vendor": false
